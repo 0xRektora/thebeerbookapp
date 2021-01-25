@@ -7,7 +7,9 @@
         "build": "react-scripts build",
         "test": "react-scripts test",
         "eject": "react-scripts eject",
-        "postinstall": "npx husky install"
+        "postinstall": "npx husky install",
+        "storybook": "start-storybook -p 6006 -s public",
+        "build-storybook": "build-storybook -s public"
     },
     "dependencies": {
         "@testing-library/jest-dom": "^5.11.4",
@@ -24,6 +26,12 @@
         "web-vitals": "^0.2.4"
     },
     "devDependencies": {
+        "@storybook/addon-actions": "^6.1.15",
+        "@storybook/addon-essentials": "^6.1.15",
+        "@storybook/addon-links": "^6.1.15",
+        "@storybook/node-logger": "^6.1.15",
+        "@storybook/preset-create-react-app": "^3.1.5",
+        "@storybook/react": "^6.1.15",
         "cz-conventional-changelog": "^3.3.0",
         "eslint-config-prettier": "^7.2.0",
         "husky": "^4.3.8",
