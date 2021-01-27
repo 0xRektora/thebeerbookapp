@@ -71,7 +71,6 @@ function useVoteSnackComment() {
         lastComments.add(message);
         if (lastComments.size === 4)
             lastComments.delete(Array.from(lastComments)[0]);
-        console.log(lastComments);
     }
 
     function getVoteMessage(beerObject: IBeerModel, voteType: TVoteType) {
