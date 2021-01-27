@@ -12,6 +12,12 @@ const Template: Story<IBeerCardProps> = (args) => <BeerCard {...args} />;
 
 export const Primary = Template.bind({});
 Primary.args = {
-    img:
-        'https://upload.wikimedia.org/wikipedia/en/f/f5/RWS_Tarot_08_Strength.jpg',
+    disableWoodBackground: true,
+    data: {
+        id: '',
+        name: 'Strength!',
+        percentage: 100,
+        imageUrl:
+            'https://upload.wikimedia.org/wikipedia/en/f/f5/RWS_Tarot_08_Strength.jpg',
+    },
 };
