@@ -6,6 +6,10 @@ import { IBeerModel } from '../../shared/models/IBeerModel';
 export type TVoteType = 'left' | 'right';
 export type TVoteTypeSubtype = 'down5' | 'up5' | 'up10';
 
+// The number of object present in a "subtype" vote comment array
+// This's important for later on, it shouldn't exceed the number of elements of the.
+// Lowest "subtype" array size.
+const MAX_COMMENTS_IN_SUBTYPE = 3;
 type TVoteComments = {
     [x in TVoteType]: {
         [x in TVoteTypeSubtype]: string[];
@@ -69,7 +73,7 @@ function useVoteSnackComment() {
 
     function handleNewComment(message: string) {
         lastComments.add(message);
-        if (lastComments.size === 4)
+        if (lastComments.size === MAX_COMMENTS_IN_SUBTYPE)
             lastComments.delete(Array.from(lastComments)[0]);
     }
 
