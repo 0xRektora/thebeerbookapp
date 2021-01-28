@@ -17,6 +17,7 @@ Primary.args = {
         id: '',
         name: 'Strength!',
         percentage: 100,
+        description: 'The best',
         imageUrl:
             'https://upload.wikimedia.org/wikipedia/en/f/f5/RWS_Tarot_08_Strength.jpg',
     },
