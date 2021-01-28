@@ -28,7 +28,7 @@ function useGetAllVotes(params?: IQueryParams) {
                 variant: 'error',
             });
         },
-        refetchInterval: 1000, // Simulate "live" data
+        refetchInterval: 5000, // Simulate "live" data
     });
 }
 

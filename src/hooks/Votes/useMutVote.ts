@@ -1,4 +1,3 @@
-import { useSnackbar } from 'notistack';
 import { useMutation } from 'react-query';
 import TheBeerBookAPI from '../../core/TheBeerBookAPI';
 import { TVoteType } from '../utils/useReactToVoteSnackbar';
@@ -19,7 +18,6 @@ interface IParams {
     voteType: TVoteType;
 }
 
-const KEY = 'useMutVote';
 const path = '/vote';
 
 const post = (params: IParams) => {
@@ -35,7 +33,6 @@ const post = (params: IParams) => {
 };
 
 function useMutVote() {
-    const snacky = useSnackbar();
     return useMutation((params: IParams) => post(params));
 }
 
