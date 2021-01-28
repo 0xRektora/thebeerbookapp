@@ -1,14 +1,21 @@
 import { Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
-import React from 'react';
+import _ from 'lodash';
+import React, { useRef } from 'react';
 import { animated, interpolate } from 'react-spring';
 import { ReactEventHandlers } from 'react-use-gesture/dist/types';
+import CONFIG from '../../core/config';
 import { IBeerModel } from '../models/IBeerModel';
 import { Utils } from '../utils/Utils';
 
-const useStyles = makeStyles({
+type TClassesProps = {
+    color: string;
+    fontTextColor: string;
+};
+
+const useStyles = makeStyles((props: TClassesProps) => ({
     container: {
-        background: 'white',
+        backgroundColor: 'rgba(255,255,255,0.7)',
         paddingTop: 10,
         paddingBottom: 10,
         width: '45vh',
@@ -21,6 +28,7 @@ const useStyles = makeStyles({
             '0 12.5px 100px -10px rgba(50, 50, 73, 0.4), 0 10px 10px -10px rgba(50, 50, 73, 0.3)',
         cursor: 'pointer',
     },
+
     img_container: {
         backgroundColor: 'white',
         height: '100%',
@@ -35,16 +43,20 @@ const useStyles = makeStyles({
         padding: '5%',
     },
     details_title: {
+        letterSpacing: '.15em',
+        textShadow: '1px 2px 0 #969696, 1px 5px 5px #aba8a8',
         fontStyle: 'italic',
         fontSize: 'larger',
+        color: (props: TClassesProps) => props.fontTextColor,
     },
-});
+}));
 
 export interface IBeerCardProps {
     rotation: number;
     scale: number;
     index: number;
     disableWoodBackground?: boolean;
+    height?: string | number;
     bind?: (...args: any[]) => ReactEventHandlers;
     data?: IBeerModel;
 }
@@ -58,21 +70,19 @@ const trans = (r: number, s: any) =>
     }deg) rotateZ(${r}deg) scale(${s})`;
 
 export function BeerCard(props: IBeerCardProps) {
-    const classes = useStyles();
+    const color = useRef(getRandomColor());
+    const fontTextColor = useRef(
+        color.current === CONFIG.palette.primary ? 'dark' : 'white',
+    );
+
+    const classes = useStyles({
+        fontTextColor: fontTextColor.current,
+        color: color.current,
+    });
 
     function renderImg() {
         return (
-            <div
-                className={classes.img_container}
-                style={{
-                    ...(props.disableWoodBackground
-                        ? {}
-                        : {
-                              background:
-                                  'url("https://images.unsplash.com/photo-1589874497556-65019ae69438?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80") no-repeat center',
-                          }),
-                }}
-            >
+            <div className={classes.img_container}>
                 <img
                     className={classes.img}
                     src={props.data?.imageUrl}
@@ -82,27 +92,42 @@ export function BeerCard(props: IBeerCardProps) {
         );
     }
 
+    function getRandomColor(): string {
+        const colors = [
+            CONFIG.palette.blue,
+            CONFIG.palette.primary,
+            CONFIG.palette.red,
+            CONFIG.palette.secondary,
+        ];
+        return _.sample(colors) as string;
+    }
+
     function renderContent() {
         return (
             <Grid
                 container
                 alignItems="center"
-                style={{ height: '100%', flexFlow: 'column' }}
-                spacing={1}
+                style={{
+                    height: '100%',
+                    flexFlow: 'column',
+                    backgroundColor: color.current,
+                    borderRadius: '15px',
+                }}
+                spacing={0}
             >
                 <Grid item>
-                    <strong>
+                    <strong className={classes.details_title}>
                         {Utils.formatAlcoholPercentage(
                             props.data?.percentage ?? 0,
                         )}
                     </strong>
                 </Grid>
 
-                <Grid item style={{ height: '100%' }}>
+                <Grid item style={{ height: '100%', backgroundColor: 'white' }}>
                     {renderImg()}
                 </Grid>
 
-                <Grid item style={{ textAlign: 'center' }}>
+                <Grid item>
                     <strong className={classes.details_title}>
                         {props.data?.name}
                     </strong>
