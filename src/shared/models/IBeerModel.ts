@@ -3,4 +3,5 @@ export interface IBeerModel {
     name: string;
     imageUrl: string;
     percentage: number;
+    description: string;
 }
